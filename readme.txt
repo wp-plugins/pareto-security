@@ -21,6 +21,7 @@ Pareto Security class acts as a central security hub checking all inputs from us
 This acts as a temporary shield during that period of time between when a vulnerability is discovered in Wordpress or 3rd party plugins, and when they are patched, and, when you update your Wordpress website.
 
 Features:
+
 * The most powerful input security plugin on Wordpress for protecting your Wordpress *.php files
 * Automatically secures your Wordpress repository against unsecured inputs common in Wordpress 3rd party plugins
 * No customisation needed, works silently in the background
