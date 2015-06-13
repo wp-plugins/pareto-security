@@ -4,7 +4,7 @@
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.3
+  Version: 1.0.2
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
