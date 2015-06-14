@@ -1,7 +1,7 @@
 === Pareto Security ===
 Contributors: te_taipo
 Donate link: http://hokioisec7agisc4.onion 
-Tags: security, spam
+Tags: authentication bypass CRLF, CSRF, cross-site scripting, database security, exploit, firewall security, hack, injection, local file inclusion, malware, rfi, remote file inclusion, scrapers, secure, secure login, security, SQL Injection, vulnerability, website security, wordpress, wordpress security, xss
 Requires at least: 3.0.1
 Tested up to: 4.2.2
 Stable tag: 1.0.2
