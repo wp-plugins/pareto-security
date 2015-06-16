@@ -1,14 +1,14 @@
 === Pareto Security ===
 Contributors: te_taipo
 Donate link: http://hokioisec7agisc4.onion 
-Tags: authentication bypass, CRLF, CSRF, cross-site scripting, database security, exploit, firewall security, hack, injection, local file inclusion, malware, rfi, remote file inclusion, scrapers, secure, secure login, security, SQL Injection, vulnerability, website security, wordpress, wordpress security, xss
+Tags: authentication bypass, CRLF, CSRF, cross-site scripting, database security, exploit, firewall security, hack, hacked, hacker, injection, local file inclusion, malware, phishing, rfi, remote file inclusion, scrapers, secure, secure login, security, SQL Injection, vulnerability, WAF, website security, wordpress, wordpress security, xss
 Requires at least: 3.0.1
 Tested up to: 4.2.2
 Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress core security class: Protect your wordpress user inputs from the usual array of attack vectors
+WordPress core security class: A Web Application Firewall for Wordpress
 
 == Description ==
 
@@ -22,6 +22,7 @@ This acts as a temporary shield during that period of time between when a vulner
 
 Features:
 
+* Full web application firewall preventing attacks from reaching Wordpress codex
 * The most powerful input security plugin on Wordpress for protecting your Wordpress *.php files
 * Automatically secures your Wordpress repository against unsecured inputs common in Wordpress 3rd party plugins
 * No customisation needed, works silently in the background
@@ -29,10 +30,12 @@ Features:
 * Using a form of heuristic rules and blacklists, processes and checks all user inputs, the REQUEST_URI, QUERY_STRING, _GET, _POST, _COOKIE and browser user-agents to detect known security threats.
 * Pareto Security is 100% free
 * Prevents uploading of backdoors
+* Locks down server error and information messages that can be used to assist attackers
 * Scans inputs from content submitted by visitors in comments and posts.
 * Block known bad crawlers.
 * Checks against malicious Request Types
 * Pareto Security is multi-site ready
+* Works silently in the background blocking attacks
 
 == Installation ==
 
