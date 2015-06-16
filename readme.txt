@@ -8,7 +8,7 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress core security class: A Web Application Firewall for Wordpress
+WordPress core security class: A Web Application Firewall to protect your Wordpress web portal
 
 == Description ==
 
