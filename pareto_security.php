@@ -4,7 +4,7 @@
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.2
+  Version: 1.0.3
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
@@ -27,28 +27,49 @@
   See: See http://www.gnu.org/licenses/gpl-3.0.txt
   
   */
-
-
- # prevent direct viewing of pareto_security.php
- if ( false !== strpos( strtolower( $_SERVER[ 'SCRIPT_NAME' ] ), Pareto_selfchk() ) ) send404();
- 
+  
  # Set Pareto Security as the first plugin loaded
- if ( defined( 'WP_PLUGIN_DIR' ) ) add_action( "activated_plugin", "load_pareto_first" );
+ if ( defined( 'WP_PLUGIN_DIR' ) ) {
+	// don't load directly
+   if ( !function_exists( 'is_admin' ) ) {
+	   header( 'Status: 403 Forbidden' );
+	   header( 'HTTP/1.1 403 Forbidden' );
+	   exit();
+   }
+   add_action( "activated_plugin", "load_pareto_first" );
+
+   define( 'PARETO_VERSION', '1.0.3' );
+   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1435534349' ) );
+   define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
+   define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
+ }
  
  class ParetoSecurity {
    # protect from non-standard request types
    protected $_nonGETPOSTReqs = 0;
    # if open_basedir is not set in php.ini. Leave disabled unless you are sure about using this.
-   protected $_open_basedir = 0; 
+   public $_open_basedir = 0; 
    # ban attack ip address to the root /.htaccess file. Leave this disabled if you are hosting a website using TOR's Hidden Services
-   protected $_banip = 0;
+   public $_banip = 0;
    # Correct Production Server Settings = 0, prevent any errors from displaying = 1, Show all errors = 2 ( depends on the php.ini settings )
    protected $_quietscript = 0; 
    # path to the root directory of the site, e.g /home/user/public_html
    protected $_doc_root = '';
    # default home page
-   protected $_default = 'index.php'; 
+   protected $_default = 'index.php';
+   
+   var $settings, $options_page;
+   
    public function __construct() {
+
+	 require( PARETO_DIR . 'pareto-settings.php' );
+	 $ParetoSettings = new Pareto_Security_Settings();
+
+	 register_activation_hook( __FILE__, array( $this,'activate' ) );
+	 register_deactivation_hook( __FILE__, array( $this,'deactivate' ) );
+
+	 $this->_banip = ( bool )$ParetoSettings->ban_ips;
+	 $this->_open_basedir = $ParetoSettings->set_open_basedir;
 
      $this->setVars();
      # if open_basedir is not set in php.ini then set it in the local scope
@@ -64,8 +85,54 @@
      $this->_SPIDER_SHIELD();
      # merge $_REQUEST with _GET and _POST excluding _COOKIE data
      $_REQUEST = array_merge( $_GET, $_POST );
-       
+
    } // end of __construct()
+
+   	function network_propagate( $pfunction, $networkwide ) {
+		global $wpdb;
+
+		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
+			// check if it is a network activation - if so, run the activation function 
+			// for each blog id
+			if ( $networkwide ) {
+				$old_blog = $wpdb->blogid;
+				// Get all blog ids
+				$blogids = $wpdb->get_col("SELECT blog_id FROM {$wpdb->blogs}");
+				foreach ($blogids as $blog_id) {
+					switch_to_blog($blog_id);
+					call_user_func($pfunction, $networkwide);
+				}
+				switch_to_blog( $old_blog );
+				return;
+			}	
+		} 
+		call_user_func( $pfunction, $networkwide );
+	}
+
+	function activate( $networkwide ) {
+		$this->network_propagate( array( $this, '_activate' ), $networkwide );
+	}
+
+	function deactivate( $networkwide ) {
+		$this->network_propagate( array( $this, '_deactivate' ), $networkwide );
+	}
+
+	/*
+		Enter our plugin activation code here.
+	*/
+	function _activate() {}
+
+	/*
+		Enter our plugin deactivation code here.
+	*/
+	function _deactivate() {}
+	
+	function admin_init() {
+	}
+
+	function admin_menu() {
+	}
+	
   /**
     * setVars()
     * 
@@ -936,24 +1003,13 @@
 	 return $_SERVER[ 'REQUEST_URI' ];
    }
 } // end of class
-$ParetoSecurity = new ParetoSecurity();
-/**
- * Pareto_selfchk()
- * 
- * @return
- */
-function Pareto_selfchk() {
-     $afp = str_replace( DIRECTORY_SEPARATOR, urldecode( '%2F' ), __file__ );
-     $afp = explode( '/', $afp );
-     if ( is_array( $afp ) ) {
- 	  $fileself = $afp[count( $afp ) - 1];
- 	  if ( $fileself[0] == '/' ) {
-               return $fileself;
-          } else {
-               return '/' . $fileself;
-          }
-     }
+
+// Initialize our plugin object.
+global $ParetoSecurity;
+if ( class_exists( "ParetoSecurity" ) && !$ParetoSecurity ) {
+    $ParetoSecurity = new ParetoSecurity();
 }
+
 /**
 * send404()
 * 
