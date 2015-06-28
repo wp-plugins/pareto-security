@@ -4,7 +4,7 @@
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.3
+  Version: 1.0.4
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
@@ -37,9 +37,8 @@
 	   exit();
    }
    add_action( "activated_plugin", "load_pareto_first" );
-
-   define( 'PARETO_VERSION', '1.0.3' );
-   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1435534349' ) );
+   define( 'PARETO_VERSION', '1.0.4' );
+   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1435568611' ) );
    define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
    define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
  }
@@ -61,14 +60,14 @@
    var $settings, $options_page;
    
    public function __construct() {
-
+if ( ( false !== ( bool )defined( 'WP_ADMIN' ) && false !== WP_ADMIN ) && ( false !== ( bool)is_admin() ) ) {
 	 require( PARETO_DIR . 'pareto-settings.php' );
 	 $ParetoSettings = new Pareto_Security_Settings();
-
+}
 	 register_activation_hook( __FILE__, array( $this,'activate' ) );
 	 register_deactivation_hook( __FILE__, array( $this,'deactivate' ) );
 
-	 $this->_banip = ( bool )$ParetoSettings->ban_ips;
+	 $this->_banip = $ParetoSettings->ban_ips;
 	 $this->_open_basedir = $ParetoSettings->set_open_basedir;
 
      $this->setVars();
@@ -833,6 +832,7 @@
      } else {
           $theDIR = $_SERVER[ 'DOCUMENT_ROOT' ] . $rootDir;
      }
+	 $theDIR = str_replace( 'wp-admin/', '', $theDIR );
 	 $theDIR = str_replace( '//', '/', $theDIR );
      return str_replace( '//', '/', $theDIR );
    }

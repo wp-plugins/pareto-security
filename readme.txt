@@ -4,7 +4,7 @@ Donate link: http://hokioisec7agisc4.onion
 Tags: security, spam
 Requires at least: 3.0.1
 Tested up to: 4.2.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,12 @@ Donations via Bitcoin to 1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
 Email me at hokioi-security@protonmail.ch
 
 == Changelog ==
+
+= 1.0.4 =
+* Fixed a bug in $this->getDir()
+
+= 1.0.3 =
+* Added settings to wp-admin/settings.
 
 = 1.0.2 =
 * Made Wordpress plugin compatible.

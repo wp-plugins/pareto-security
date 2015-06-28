@@ -1,14 +1,4 @@
 <?php
-/*
-  The user interface and activation/deactivation methods for administering Pareto Security WordPress plugin
-  Plugin Name: Pareto Security
-  Plugin URI: http://hokioisec7agisc4.onion/?p=25
-  Description: Core Security Class - Defense against a range of common attacks such as database injection
-  Author: Te_Taipo
-  Version: 1.0.3
-  Author URI: http://hokioisec7agisc4.onion
-  BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
-  */
 
 if (!function_exists( 'is_admin' ) ) {
     header( 'Status: 403 Forbidden' );
@@ -25,8 +15,7 @@ class Pareto_Security_Settings {
 			  	'perm_ban_ips' => '0',
 				'set_open_basedir' => '0'
 				);
-	var $pagehook, $page_id, $settings_field, $options, $set_open_basedir;
-	public $ban_ips = 0;
+	var $pagehook, $page_id, $settings_field, $options, $set_open_basedir, $ban_ips;
 	
 	function __construct() {	
 		$this->page_id = 'pareto_security_settings';
@@ -37,17 +26,15 @@ class Pareto_Security_Settings {
 		add_action( 'admin_init', array( $this,'admin_init' ), 20 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
 
-		if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {		
+		if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 			foreach( $_POST as $key => $val ) {
 					if ( is_array( $val ) ) {
 						if ( isset( $_POST[ "pareto_security_settings_options" ]["set_open_basedir" ] ) &&
-							 ( ( $_POST[ "pareto_security_settings_options" ]["set_open_basedir" ] != 0 ) ||
-							   ( $_POST[ "pareto_security_settings_options" ]["set_open_basedir" ] != 1 ) ) ) {
+							 ( ( strlen( $_POST[ "pareto_security_settings_options" ]["set_open_basedir" ] ) > 1 ) ) ) {
 							     $_POST[ "pareto_security_settings_options" ]["set_open_basedir" ] = 0;
 						}
 						if ( isset( $_POST[ "pareto_security_settings_options" ]["perm_ban_ips" ] ) &&
-							 ( ( $_POST[ "pareto_security_settings_options" ]["perm_ban_ips" ] !== 0 ) ||
-							 ( $_POST[ "pareto_security_settings_options" ]["perm_ban_ips" ] !== 1 ) ) ) {
+							 ( ( strlen( $_POST[ "pareto_security_settings_options" ]["perm_ban_ips" ] ) > 1 ) ) ) {
 							   $_POST[ "pareto_security_settings_options" ]["perm_ban_ips" ] = 0;
 						}
 
@@ -56,8 +43,8 @@ class Pareto_Security_Settings {
 					}
 			}
 		}
-		$this->ban_ips = ( bool )isset( $this->options[ 'perm_ban_ips' ] );
-		$this->set_open_basedir = ( bool )isset( $this->options[ 'set_open_basedir' ] );
+		$this->ban_ips = isset( $this->options[ 'perm_ban_ips' ] );
+		$this->set_open_basedir = isset( $this->options[ 'set_open_basedir' ] );
 	}
 	
 	function admin_init() {
@@ -209,13 +196,13 @@ class Pareto_Security_Settings {
 			<h4>Permanently Ban IP Addresses:</h4>
 			This will allow Pareto Security to automatically add IP addresses from attacks to your .htaccess file.
 			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'perm_ban_ips' ); ?>" id="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>" value="<?php echo isset( $this->options['perm_ban_ips']) ? 1 : 0;?>" <?php echo isset($this->options['perm_ban_ips']) ? 'checked' : '';?> /> 
+			<input type="checkbox" name="<?php echo $this->get_field_name( 'perm_ban_ips' ); ?>" id="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>" value="<?php echo isset( $this->options['perm_ban_ips'] ) ? 1 : 0; ?>" <?php echo isset( $this->options['perm_ban_ips'] ) ? checked : ''; ?> /> 
 			<label for="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>"><?php _e( 'Permanently ban IPs', 'pareto_security_settings' ); ?></label>
 			<br />
 			<h4>Enabled PHP's open_basedir() function</h4>
 			If you do not know what this is, then leave it unchecked
 			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'set_open_basedir' ); ?>" id="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>" value="<?php echo isset( $this->options['set_open_basedir']) ? 1 : 0;?>" <?php echo isset($this->options['set_open_basedir']) ? 'checked' : '';?> /> 
+			<input type="checkbox" name="<?php echo $this->get_field_name( 'set_open_basedir' ); ?>" id="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>" value="<?php echo isset( $this->options['set_open_basedir'] ) ? 1 : 0;?>" <?php echo isset($this->options['set_open_basedir']) ? 'checked' : '';?> /> 
 			<label for="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>"><?php _e( 'Set open_basedir', 'pareto_security_settings' ); ?></label>
 		</p>
 	<?php }
