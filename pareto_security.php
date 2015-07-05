@@ -38,7 +38,7 @@
    }
    add_action( "activated_plugin", "load_pareto_first" );
    define( 'PARETO_VERSION', '1.0.5' );
-   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1435568611' ) );
+   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436100844' ) );
    define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
    define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
  }
