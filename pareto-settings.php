@@ -39,7 +39,7 @@ class Pareto_Security_Settings {
 						}
 
 					} else {
-						$_POST[ $key ] = $this->cleanRequestInput( $this->noHTML( $val ) );
+						$_POST[ $key ] = $this->cleanRequestInput( $val );
 					}
 			}
 		}
@@ -116,9 +116,6 @@ class Pareto_Security_Settings {
             } else return 0;		
 	    }
     }
-	function noHTML( $input, $encoding = 'UTF-8' ) {
-		return htmlspecialchars( $input, ENT_QUOTES | ENT_HTML5, $encoding );
-	}
 	
 	/*
 		Render settings page.
