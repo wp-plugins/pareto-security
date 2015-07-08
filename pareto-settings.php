@@ -23,9 +23,6 @@ class Pareto_Security_Settings {
 		$this->settings_field = 'pareto_security_settings_options';
 		$this->options = get_option( $this->settings_field );
 
-		add_action( 'admin_init', array( $this,'admin_init' ), 20 );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
-
 		if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
 			foreach( $_POST as $key => $val ) {
 					if ( is_array( $val ) ) {
@@ -45,6 +42,11 @@ class Pareto_Security_Settings {
 		}
 		$this->ban_ips = isset( $this->options[ 'perm_ban_ips' ] );
 		$this->set_open_basedir = isset( $this->options[ 'set_open_basedir' ] );
+		
+		if ( ( false !== ( bool )defined( 'WP_ADMIN' ) && false !== WP_ADMIN ) && ( false !== ( bool)is_admin() ) ) {
+				add_action( 'admin_init', array( $this,'admin_init' ), 20 );
+				add_action( 'admin_menu', array( $this, 'admin_menu' ), 20 );
+		}
 	}
 	
 	function admin_init() {

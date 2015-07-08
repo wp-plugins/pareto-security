@@ -13,6 +13,4 @@ if ( !is_user_logged_in() )
 if ( !current_user_can( 'install_plugins' ) )
 	wp_die( 'You do not have permission to run this script.' );
 
-
-// Enter our plugin uninstall script below
 ?>
