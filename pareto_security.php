@@ -4,7 +4,7 @@
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.6
+  Version: 1.0.7
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
@@ -37,8 +37,8 @@
 	   exit();
    }
    add_action( "activated_plugin", "load_pareto_first" );
-   define( 'PARETO_VERSION', '1.0.6' );
-   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436100844' ) );
+   define( 'PARETO_VERSION', '1.0.7' );
+   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436560189' ) );
    define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
    define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
  }
@@ -61,15 +61,17 @@
    
    public function __construct() {
 
-	 require( PARETO_DIR . 'pareto-settings.php' );
-	 $ParetoSettings = new Pareto_Security_Settings();
+	 if ( defined( 'WP_PLUGIN_DIR' ) ) {
+		require( PARETO_DIR . 'pareto-settings.php' );
+		$ParetoSettings = new Pareto_Security_Settings();
 
-	 register_activation_hook( __FILE__, array( $this,'activate' ) );
-	 register_deactivation_hook( __FILE__, array( $this,'deactivate' ) );
+		register_activation_hook( __FILE__, array( $this,'activate' ) );
+		register_deactivation_hook( __FILE__, array( $this,'deactivate' ) );
 
-	 $this->_banip = $ParetoSettings->ban_ips;
-	 $this->_open_basedir = $ParetoSettings->set_open_basedir;
-
+		$this->_banip = $ParetoSettings->ban_ips;
+		$this->_open_basedir = $ParetoSettings->set_open_basedir;
+	 }
+	 
      $this->setVars();
      # if open_basedir is not set in php.ini then set it in the local scope
      if ( false !== ( bool )$this->_open_basedir ) $this->setOpenBaseDir();
@@ -410,19 +412,19 @@
           javascript:alert\(|pwtoken\_get|php\_uname|%3Cform|passthru\(|sha1\(|sha2\(|\}if\(!|
           <\?php|\/iframe|; GET|\\$\_GET|=@@version|ob\_starting|and1=1|\.\.\/cmd|document\.cookie|
           document\.write|onload\=|mysql\_query|document\.location|window\.location|\]\);\}|
-          location\.replace\(|\(\)\}|@@datadir|\/FRAMESET|<ahref=|\[url=http:\/\/|\[\/url\]|
+          location\.replace\(|\(\)\}|@@datadir|\/FRAMESET|0x3c62723e|\$HTTP\_| ping -c|
           \[link=http:\/\/|\[\/link\]|YWxlcnQo|\_START\_|onunload%3d|PHP\_SELF|shell\_exec|
-          \\$\_SERVER|;!--=|substr\(|\\$\_POST|\\$\_SESSION|\\$\_REQUEST|\\$\_ENV|GLOBALS\[|\$HTTP\_|
+          \\$\_SERVER|;!--=|substr\(|\\$\_POST|\\$\_SESSION|\\$\_REQUEST|\\$\_ENV|GLOBALS\[|
           \.php\/admin|mosConfig\_|%3C@replace\(|hex\_ent|inurl:|replace\(|\/iframe>|return%20clk|
           php\/password\_for|unhex\(|error\_reporting\(|HTTP\_CMD|=alert\(|localhost|}\)%3B|
           Set-Cookie|%27%a0%6f%72%a0%31%3d%31|%bf%5c%27|%ef%bb%bf|%20regexp%20|\{\\$\{|%27|
-          HTTP\/1\.|\{$\_|PRINT@@variable|xp\_cmdshell|xp\_availablemedia|sp\_password| ping -c|
+          HTTP\/1\.|\{$\_|PRINT@@variable|xp\_cmdshell|xp\_availablemedia|sp\_password|
           \/var\/www\/php|\_SESSION\[!|file\_get\_contents\(|\*\(\|\(objectclass=|\|\||
           \.\.\/wp-|\.htaccess|system\(\%24|UTL\_HTTP\.REQUEST|script>";
      $_blacklist[2] = "ZXZhbCg=|eval\(base64\_decode|fromCharCode|allow\_url\_include|
           php:\/\/input|concat\(@@|suhosin\.simulation=|\#\!\/usr\/bin\/perl -I|shell\_exec\(|
           file\_get\_contents\(|prompt\(|script>alert\(|fopen\(|\_GET\['cmd|\"><script|\"><javas|
-		  <iframe|YWxlcnQo|ZnJvbUNoYXJDb2Rl";
+          YWxlcnQo|ZnJvbUNoYXJDb2Rl";
      $_blacklist[3] = "WebLeacher|\/usr\/bin\/perl|:;\};|system\(|autoemailspider|Baidu|MSProxy|Yeti|Twiceler|blackhat|Mail\.Ru|fuck";
      $_blacklist[4] = "eval\(|fromCharCode|\/usr\/bin\/perl|prompt\(|ZXZhbCg=|ZnJvbUNoYXJDb2Rl|U0VMRUNULyoqLw==|:;\};|wget http|system\(|Ki9XSEVSRS8q|YWxlcnQo";
      $_thelist = $_blacklist[ ( int )$list ];
