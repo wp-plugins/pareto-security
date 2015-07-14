@@ -198,11 +198,13 @@ class Pareto_Security_Settings {
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'perm_ban_ips' ); ?>" id="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>" value="<?php echo isset( $this->options['perm_ban_ips'] ) ? 1 : 0; ?>" <?php echo isset( $this->options['perm_ban_ips'] ) ? checked : ''; ?> /> 
 			<label for="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>"><?php _e( 'Permanently ban IPs', 'pareto_security_settings' ); ?></label>
 			<br />
+			<?php /* ?>
 			<h4>Restricts PHP's open_basedir() function to your root directory:</h4>
 			If you do not know what this is, then leave it unchecked
 			<br />
-			<input type="checkbox" name="<?php echo $this->get_field_name( 'set_open_basedir' ); ?>" id="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>" value="<?php echo isset( $this->options['set_open_basedir'] ) ? 1 : 0;?>" <?php echo isset($this->options['set_open_basedir']) ? 'checked' : '';?> /> 
+			<input type="checkbox" name="<?php echo $this->get_field_name( 'set_open_basedir' ); ?>" id="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>" value="<?php echo isset( $this->options['set_open_basedir'] ) ? 1 : 0;?>" <?php echo isset($this->options['set_open_basedir']) ? 'checked' : '';?> />
 			<label for="<?php echo $this->get_field_id( 'set_open_basedir' ); ?>"><?php _e( 'Set open_basedir', 'pareto_security_settings' ); ?></label>
+			<?php */ ?>
 		</p>
 	<?php }
 	}

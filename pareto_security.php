@@ -4,7 +4,7 @@
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.7
+  Version: 1.0.8
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
@@ -37,8 +37,8 @@
 	   exit();
    }
    add_action( "activated_plugin", "load_pareto_first" );
-   define( 'PARETO_VERSION', '1.0.7' );
-   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436560189' ) );
+   define( 'PARETO_VERSION', '1.0.8' );
+   define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436861663' ) );
    define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
    define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
  }
@@ -69,7 +69,7 @@
 		register_deactivation_hook( __FILE__, array( $this,'deactivate' ) );
 
 		$this->_banip = $ParetoSettings->ban_ips;
-		$this->_open_basedir = $ParetoSettings->set_open_basedir;
+	  # $this->_open_basedir = $ParetoSettings->set_open_basedir;
 	 }
 	 
      $this->setVars();
@@ -454,6 +454,11 @@
 	  $this->karo( true );
 	  return;
      }
+	 if ( false !== strpos( $req, 'server-status' ) ) {
+		$this->karo( true );
+		return;
+	 }
+	 
      # WP Author Discovery
      $ref = isset( $_SERVER[ 'HTTP_REFERER' ] ) ? $this->url_decoder( $_SERVER[ 'HTTP_REFERER' ] ): NULL;
      if ( false === is_null( $ref ) ) {
