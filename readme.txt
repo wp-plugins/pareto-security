@@ -5,7 +5,7 @@ Donate link: http://hokioisec7agisc4.onion
 Tags: authentication bypass, CRLF, CSRF, cross-site scripting, database security, exploit, firewall security, hack, hacked, hacker, injection, local file inclusion, malware, phishing, rfi, remote file inclusion, scrapers, secure, secure login, security, SQL Injection, vulnerability, WAF, website security, wordpress, wordpress security, xss
 Requires at least: 3.0.1
 Tested up to: 4.2.2
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ Donations via Bitcoin to 1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
 Email me at hokioi-security@protonmail.ch
 
 == Changelog ==
+
+= 1.0.9 =
+* Make all preg_match case insensitive
+* Prevent XSS via cookie authentication vulnerability in PHP ( see https://bugs.php.net/bug.php?id=69892 )
 
 = 1.0.8 =
 * Block access to Apache Server-Status

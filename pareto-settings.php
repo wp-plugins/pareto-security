@@ -193,7 +193,7 @@ class Pareto_Security_Settings {
 	?>
 		<p>        
 			<h4>Permanently Ban IP Addresses:</h4>
-			This will allow Pareto Security to automatically add IP addresses from attacks to your .htaccess file.
+			This will allow Pareto Security™ to automatically add IP addresses from attacks to your .htaccess file.
 			<br />
 			<input type="checkbox" name="<?php echo $this->get_field_name( 'perm_ban_ips' ); ?>" id="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>" value="<?php echo isset( $this->options['perm_ban_ips'] ) ? 1 : 0; ?>" <?php echo isset( $this->options['perm_ban_ips'] ) ? checked : ''; ?> /> 
 			<label for="<?php echo $this->get_field_id( 'perm_ban_ips' ); ?>"><?php _e( 'Permanently ban IPs', 'pareto_security_settings' ); ?></label>

@@ -1,10 +1,10 @@
 <?php
   /*
-  Plugin Name: Pareto Security
+  Plugin Name: Pareto Security™
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
-  Version: 1.0.8
+  Version: 1.0.9
   Author URI: http://hokioisec7agisc4.onion
   BTC:1LHiMXedmtyq4wcYLedk9i9gkk8A8Hk7qX
   */
@@ -28,7 +28,7 @@
   
   */
   
- # Set Pareto Security as the first plugin loaded
+ # Set Pareto Security™ as the first plugin loaded
  if ( defined( 'WP_PLUGIN_DIR' ) ) {
 	// don't load directly
    if ( !function_exists( 'is_admin' ) ) {
@@ -37,7 +37,7 @@
 	   exit();
    }
    add_action( "activated_plugin", "load_pareto_first" );
-   define( 'PARETO_VERSION', '1.0.8' );
+   define( 'PARETO_VERSION', '1.0.9' );
    define( 'PARETO_RELEASE_DATE', date_i18n( 'F j, Y', '1436861663' ) );
    define( 'PARETO_DIR', plugin_dir_path( __FILE__ ) );
    define( 'PARETO_URL', plugin_dir_url( __FILE__ ) );
@@ -232,7 +232,7 @@
                 eval|exec|from|ftp|grant|group|insert|isnull|into|js|length\(|load|
                 master|onmouse|null|php|schema|select|set|shell|show|sleep|table|
                 union|update|utf|var|waitfor|while";
-     $vartrig = preg_replace( "/[\s]/", "", $vartrig );
+     $vartrig = preg_replace( "/[\s]/i", "", $vartrig );
      for( $x = 1; $x <= 5; $x++ ) {
           $string = $this->cleanString( $x, $string );
     	  if ( false !== ( bool )preg_match( "/$vartrig/i", $string ) ) {
@@ -279,9 +279,9 @@
                     return true;
        	  } elseif ( ( ( false !== ( bool )preg_match( "/select|sleep|isnull|declare|ascii\(substring|length\(/i", $string ) ) &&
                      ( false !== ( bool )preg_match( "/\band\b|\bif\b|group_|_ws|load_|concat\(|\bfrom\b/i", $string ) ) &&
-                     ( false !== ( bool )preg_match( "/$sqlmatchlist/", $string ) ) ) ) {
+                     ( false !== ( bool )preg_match( "/$sqlmatchlist/i", $string ) ) ) ) {
                     return true;
-       	  } elseif ( false !== preg_match_all( "/$sqlmatchlist/", $string, $matches ) > 2 ) {
+       	  } elseif ( false !== preg_match_all( "/$sqlmatchlist/i", $string, $matches ) > 2 ) {
                     return true;
        	  } elseif ( false !== strpos( $string, 'update' ) &&
                     false !== ( bool )preg_match( "/\bset\b/i", $string ) &&
@@ -426,7 +426,8 @@
           file\_get\_contents\(|prompt\(|script>alert\(|fopen\(|\_GET\['cmd|\"><script|\"><javas|
           YWxlcnQo|ZnJvbUNoYXJDb2Rl";
      $_blacklist[3] = "WebLeacher|\/usr\/bin\/perl|:;\};|system\(|autoemailspider|Baidu|MSProxy|Yeti|Twiceler|blackhat|Mail\.Ru|fuck";
-     $_blacklist[4] = "eval\(|fromCharCode|\/usr\/bin\/perl|prompt\(|ZXZhbCg=|ZnJvbUNoYXJDb2Rl|U0VMRUNULyoqLw==|:;\};|wget http|system\(|Ki9XSEVSRS8q|YWxlcnQo";
+     $_blacklist[4] = "eval\(|fromCharCode|\/usr\/bin\/perl|prompt\(|ZXZhbCg=|ZnJvbUNoYXJDb2Rl|U0VMRUNULyoqLw==|:;\};|wget http|
+					   system\(|Ki9XSEVSRS8q|YWxlcnQo|4294967296";
      $_thelist = $_blacklist[ ( int )$list ];
 	 $_thelist = preg_replace( "/[\s]/i", '', $_thelist );
      if ( false !== ( bool )preg_match( "/$_thelist/i", $val ) ) {
@@ -580,7 +581,7 @@
      $reqType = $_SERVER[ 'REQUEST_METHOD' ];
      $req_whitelist = array( 'GET', 'POST' );
      # first check for numbers in REQUEST_METHOD
-     if ( false !== ( bool )preg_match( "/[0-9]+/", $reqType ) ) {
+     if ( false !== ( bool )preg_match( "/[0-9]+/i", $reqType ) ) {
     	  $this->karo( true );
           return;
      }
@@ -738,7 +739,7 @@
      $filename = ( ( ( strlen( ini_get( "cgi.fix_pathinfo" ) ) > 0 ) && ( ( bool )ini_get( "cgi.fix_pathinfo" ) == false ) ) ||
             ! isset( $HTTP_SERVER_VARS[ "SCRIPT_NAME" ] ) ) ? basename( $HTTP_SERVER_VARS[ "PHP_SELF" ] ) : basename( $HTTP_SERVER_VARS[ "SCRIPT_NAME" ] );
      if ( 2 > strlen( $filename ) ) $filename = $this->_default; // or whatever your default file is
-     preg_match( "@[a-z0-9_-]+\.php@i", $filename, $matches );
+		  preg_match( "@[a-z0-9_-]+\.php@i", $filename, $matches );
 	 if ( is_array( $matches ) &&
 		  array_key_exists( 0, $matches ) &&
           ( '.php' == substr( $matches[ 0 ], -4, 4 ) ) &&
@@ -871,7 +872,7 @@
                     $check = false;
                  } else $check = true; //passed the first test
        } else {
-		  if ( false !== preg_match( "/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/", $ip ) ) {
+		  if ( false !== preg_match( "/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/i", $ip ) ) {
 			  $check = true; //passed second test
 			  
 			  $parts = explode( '.', $ip );
@@ -988,7 +989,7 @@
    function setReq_uri() {
      $_request_uri = '';
      if ( empty( $_SERVER[ 'REQUEST_URI' ] ) || ( php_sapi_name() != 'cgi-fcgi' && false !== ( bool )
-          preg_match( "/^Microsoft-IIS\//", $_SERVER[ 'SERVER_SOFTWARE' ] ) ) ) {
+          preg_match( "/^Microsoft-IIS\//i", $_SERVER[ 'SERVER_SOFTWARE' ] ) ) ) {
           if ( false !== getenv( 'REQUEST_URI' ) ) {
                $_request_uri = getenv( 'REQUEST_URI' );
           } else {
