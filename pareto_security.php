@@ -1,6 +1,6 @@
 <?php
   /*
-  Plugin Name: Pareto Security™
+  Plugin Name: Pareto Security
   Plugin URI: http://hokioisec7agisc4.onion/?p=25
   Description: Core Security Class - Defense against a range of common attacks such as database injection
   Author: Te_Taipo
