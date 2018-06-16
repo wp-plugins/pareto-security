@@ -1,0 +1,105 @@
+.divTopTable{
+    background-color:#C9C9C9;
+	display: table;
+    padding: 3px 3px;
+}
+.divMainTable{
+    width: 1050px;
+    background-color:#C9C9C9;
+	display: table;
+}
+.divTopTableRow {
+    background-color:#C9C9C9;
+	display: table-row;
+}
+.divTableRow {
+	display: table-row;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell {
+    background-color: #F3F3F3;
+	border: 2px solid #C9C9C9;
+	display: table-cell;
+	padding: 3px 3px;
+}
+.divAdvancedMode {
+    background-color: #F3F3F3;
+	display: table-cell;
+	padding: 3px 3px;
+}
+.divHeaders, .divTableHead {
+    background-color:#5F607B;
+	border: 2px solid #C9C9C9;
+	display: table-cell;
+	padding: 3px 3px;
+    color: #FFFFFF;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+.divMainTableBody {
+	display: table-row-group;
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #C4C4C4;
+}
+.container:hover input ~ .checkmark {
+  background-color: #959595;
+}
+.container input:checked ~ .checkmark {
+  background-color: #5F607B;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+.container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
